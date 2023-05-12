@@ -1,0 +1,60 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+  padding: 0px 40px 0;
+  font-weight: 700;
+  font-family: 'Cabinet-Grotesk', Arial, Helvetica, sans-serif;
+}
+
+.header__info-container {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.header__logo {
+  max-width: 89px;
+  max-height: 40px;
+}
+
+.header__info {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+.header__user-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.header__add-button {
+  gap: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+  font-family: 'Cabinet-Grotesk', Arial, Helvetica, sans-serif;
+}
+
+.header__add-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.header__username {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.header__useravatar {
+  width: 40px;
+  height: 40px;
+}
