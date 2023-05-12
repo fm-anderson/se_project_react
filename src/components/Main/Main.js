@@ -1,9 +1,10 @@
 import './Main.css';
+import WeatherCard from '../WeatherCard';
 
-export default function Main() {
+export default function Main({ temp, sky }) {
   return (
     <main className="main">
-      <h1>Main</h1>
+      <WeatherCard temp={temp} sky={sky} />
     </main>
   );
 }

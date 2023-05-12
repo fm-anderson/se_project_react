@@ -2,7 +2,7 @@ import headerLogo from '../../images/logoHeader.png';
 import avatar from '../../images/avatar.png';
 import './Header.css';
 
-export default function Header() {
+export default function Header({ city }) {
   const currentDate = new Date().toLocaleString('default', {
     month: 'long',
     day: 'numeric',
@@ -12,14 +12,12 @@ export default function Header() {
     <header className="header">
       <div className="header__info-container">
         <img className="header__logo" src={headerLogo} alt="logo" />
-        <p className="header__info">{currentDate}, New York</p>
+        <p className="header__info">
+          {currentDate}, {city}
+        </p>
       </div>
       <div className="header__user-container">
-        <button
-          className="header__add-button"
-          type="button"
-          //   onClick={onAddButtonClick}
-        >
+        <button className="header__add-button" type="button">
           + Add Clothes
         </button>
         <div className="header__username">Terrence Tegegne</div>
