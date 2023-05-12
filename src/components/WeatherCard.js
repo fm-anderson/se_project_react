@@ -5,8 +5,8 @@ export default function WeatherCard({ temp, sky }) {
   const filteredImage = weatherOptions.filter((item) => {
     return item.day === isDay() && item.type === sky;
   });
-  const imageSrc = filteredImage[0].url || '';
-  const imageAlt = filteredImage[0].type || '';
+  const imageSrc = filteredImage[0].url;
+  const imageAlt = filteredImage[0].type;
 
   function isDay() {
     const hours = new Date().getHours();

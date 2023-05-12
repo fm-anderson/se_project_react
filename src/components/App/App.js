@@ -19,7 +19,13 @@ export default function App() {
         const temperature = parseWeatherData(data);
         setTemp(temperature);
         const skyCondition = data.weather[0].main;
-        setSky(skyCondition);
+        if (data.weather[0].id >= 700 && data.weather[0].id <= 781) {
+          setSky('Clouds');
+        } else if (data.weather[0].main === 'Drizzle') {
+          setSky('Rain');
+        } else {
+          setSky(skyCondition);
+        }
       })
       .catch((err) => {
         console.log(err);
