@@ -11,6 +11,15 @@ import stormN from '../images/night/storm.png';
 import snowN from '../images/night/snow.png';
 import fogN from '../images/night/fog.png';
 
+//Dubai
+// const latitude = 25.276987;
+// const longitude = 55.296249;
+
+//Adelaide
+// const latitude = -34.92123;
+// const longitude = 138.599503;
+
+//Chicago, US
 const latitude = 41.8818;
 const longitude = -87.6231;
 const ApiKey = 'c73d8e7e57062e271ebf1cd81727cad4';
