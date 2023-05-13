@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div>Developed by Anderson M.</div>
-      <div>2023</div>
+      <div>{new Date().getFullYear()}</div>
     </footer>
   );
 }

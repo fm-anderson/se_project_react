@@ -24,18 +24,22 @@ export default function App() {
     setActiveModal('create');
   };
 
-  const onClose = () => {
+  const closeModal = () => {
     setActiveModal('');
   };
 
-  const handleEsc = (e) => {
-    if (e.keyCode === 27) {
-      setActiveModal('');
-    }
-  };
-
   useEffect(() => {
+    if (!activeModal) return;
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
     window.addEventListener('keydown', handleEsc);
+    // clean up function
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
   }, [activeModal]);
 
   useEffect(() => {
@@ -68,14 +72,14 @@ export default function App() {
         <ModalWithForm
           title={'New garment'}
           buttonText={'Add garment'}
-          onClose={onClose}
+          closeModal={closeModal}
           name={'create'}
         >
           <FormAdd />
         </ModalWithForm>
       )}
       {activeModal === 'preview' && (
-        <ItemModal selectedCard={selectedCard} onClose={onClose} />
+        <ItemModal selectedCard={selectedCard} closeModal={closeModal} />
       )}
     </div>
   );
