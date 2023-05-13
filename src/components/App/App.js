@@ -34,15 +34,8 @@ export default function App() {
     }
   };
 
-  const handleOutsideClick = () => {
-    if (document.querySelector('.modal')) {
-      document.querySelector('.modal').addEventListener('click', onClose);
-    }
-  };
-
   useEffect(() => {
     window.addEventListener('keydown', handleEsc);
-    handleOutsideClick();
   }, [activeModal]);
 
   useEffect(() => {
