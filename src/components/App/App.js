@@ -1,12 +1,12 @@
+import './App.css';
 import { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
-import { getForecastWeather, parseWeatherData } from '../../utils/weatherApi';
-
-import './App.css';
 import FormAdd from '../FormAdd/FormAdd';
+import ItemModal from '../ItemModal/ItemModal';
+import { getForecastWeather, parseWeatherData } from '../../utils/weatherApi';
 
 export default function App() {
   const [temp, setTemp] = useState(0);
@@ -17,6 +17,7 @@ export default function App() {
 
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
+    setActiveModal('preview');
   };
 
   const handleCreateModal = () => {
@@ -62,6 +63,9 @@ export default function App() {
         >
           <FormAdd />
         </ModalWithForm>
+      )}
+      {activeModal === 'preview' && (
+        <ItemModal selectedCard={selectedCard} onClose={onClose} />
       )}
     </div>
   );
