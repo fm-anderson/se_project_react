@@ -28,6 +28,23 @@ export default function App() {
     setActiveModal('');
   };
 
+  const handleEsc = (e) => {
+    if (e.keyCode === 27) {
+      setActiveModal('');
+    }
+  };
+
+  const handleOutsideClick = () => {
+    if (document.querySelector('.modal')) {
+      document.querySelector('.modal').addEventListener('click', onClose);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleEsc);
+    handleOutsideClick();
+  }, [activeModal]);
+
   useEffect(() => {
     getForecastWeather()
       .then((data) => {

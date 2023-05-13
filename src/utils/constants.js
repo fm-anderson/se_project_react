@@ -11,6 +11,8 @@ import stormN from '../images/night/storm.png';
 import snowN from '../images/night/snow.png';
 import fogN from '../images/night/fog.png';
 
+// ----- hard coded cities to test functionality -----
+
 //Dubai
 // const latitude = 25.276987;
 // const longitude = 55.296249;
@@ -26,6 +28,9 @@ import fogN from '../images/night/fog.png';
 //Chicago, US
 const latitude = 41.8818;
 const longitude = -87.6231;
+
+// ----- hard coded cities to test functionality -----
+
 const ApiKey = 'c73d8e7e57062e271ebf1cd81727cad4';
 
 const defaultClothingItems = [
