@@ -19,6 +19,10 @@ import fogN from '../images/night/fog.png';
 // const latitude = -34.92123;
 // const longitude = 138.599503;
 
+//Augusta
+// const latitude = 44.331493;
+// const longitude = -69.788994;
+
 //Chicago, US
 const latitude = 41.8818;
 const longitude = -87.6231;

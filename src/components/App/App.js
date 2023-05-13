@@ -2,18 +2,29 @@ import { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
+import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import { getForecastWeather, parseWeatherData } from '../../utils/weatherApi';
 
 import './App.css';
+import FormAdd from '../FormAdd/FormAdd';
 
 export default function App() {
   const [temp, setTemp] = useState(0);
   const [sky, setSky] = useState('Clear');
   const [city, setCity] = useState('');
   const [selectedCard, setSelectedCard] = useState({});
+  const [activeModal, setActiveModal] = useState('');
 
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
+  };
+
+  const handleCreateModal = () => {
+    setActiveModal('create');
+  };
+
+  const onClose = () => {
+    setActiveModal('');
   };
 
   useEffect(() => {
@@ -39,9 +50,19 @@ export default function App() {
 
   return (
     <div className="App">
-      <Header city={city} />
+      <Header city={city} handleCreateModal={handleCreateModal} />
       <Main temp={temp} sky={sky} handleSelectedCard={handleSelectedCard} />
       <Footer />
+      {activeModal === 'create' && (
+        <ModalWithForm
+          title={'New garment'}
+          buttonText={'Add garment'}
+          onClose={onClose}
+          name={'create'}
+        >
+          <FormAdd />
+        </ModalWithForm>
+      )}
     </div>
   );
 }

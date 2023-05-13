@@ -1,5 +1,5 @@
 import './WeatherCard.css';
-import { weatherOptions } from '../utils/constants';
+import { weatherOptions } from '../../utils/constants';
 
 export default function WeatherCard({ temp, sky }) {
   const filteredImage = weatherOptions.filter((item) => {
