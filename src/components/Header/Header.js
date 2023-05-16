@@ -1,6 +1,7 @@
 import headerLogo from '../../images/logoHeader.png';
 import avatar from '../../images/avatar.png';
 import './Header.css';
+import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 
 export default function Header({ city, handleCreateModal }) {
   const currentDate = new Date().toLocaleString('default', {
@@ -17,6 +18,7 @@ export default function Header({ city, handleCreateModal }) {
         </p>
       </div>
       <div className="header__user-container">
+        <ToggleSwitch />
         <button
           className="header__add-button"
           type="button"
