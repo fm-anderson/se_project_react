@@ -5,12 +5,14 @@ import Main from '../Main/Main';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import FormAdd from '../FormAdd/FormAdd';
 import ItemModal from '../ItemModal/ItemModal';
+import Profile from '../Profile/Profile';
 import CurrentTemperatureUnitContext from '../../contexts/CurrentTemperatureUnitContext';
 import {
   getForecastWeather,
   parseWeatherData,
   getWeatherCard,
 } from '../../utils/weatherApi';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 export default function App() {
@@ -70,35 +72,44 @@ export default function App() {
   }, []);
 
   return (
-    <div className="App">
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit }}
-      >
-        <Header
-          city={city}
-          handleCreateModal={handleCreateModal}
-          handleToggleSwitchChange={handleToggleSwitchChange}
-        />
-        <Main
-          handleSelectedCard={handleSelectedCard}
-          skyCondition={skyCondition}
-          tempObj={tempObj}
-        />
-        <Footer />
-        {activeModal === 'create' && (
-          <ModalWithForm
-            title={'New garment'}
-            buttonText={'Add garment'}
-            closeModal={closeModal}
-            name={'create'}
-          >
-            <FormAdd />
-          </ModalWithForm>
-        )}
-        {activeModal === 'preview' && (
-          <ItemModal selectedCard={selectedCard} closeModal={closeModal} />
-        )}
-      </CurrentTemperatureUnitContext.Provider>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <CurrentTemperatureUnitContext.Provider
+          value={{ currentTemperatureUnit }}
+        >
+          <Header
+            city={city}
+            handleCreateModal={handleCreateModal}
+            handleToggleSwitchChange={handleToggleSwitchChange}
+          />
+          <Switch>
+            <Route exact path="/">
+              <Main
+                handleSelectedCard={handleSelectedCard}
+                skyCondition={skyCondition}
+                tempObj={tempObj}
+              />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+          </Switch>
+          <Footer />
+          {activeModal === 'create' && (
+            <ModalWithForm
+              title={'New garment'}
+              buttonText={'Add garment'}
+              closeModal={closeModal}
+              name={'create'}
+            >
+              <FormAdd />
+            </ModalWithForm>
+          )}
+          {activeModal === 'preview' && (
+            <ItemModal selectedCard={selectedCard} closeModal={closeModal} />
+          )}
+        </CurrentTemperatureUnitContext.Provider>
+      </div>
+    </BrowserRouter>
   );
 }

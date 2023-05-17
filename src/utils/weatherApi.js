@@ -26,7 +26,6 @@ export const parseWeatherData = (data) => {
   weather.temp.F = `${Math.round(data.main.temp)}°F`;
   weather.temp.C = `${Math.round(((data.main.temp - 32) * 5) / 9)}°C`;
   weather.temp.weather = data.weather[0].main;
-  console.log(weather);
   return weather;
 };
 

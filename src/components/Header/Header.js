@@ -1,6 +1,7 @@
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 import headerLogo from '../../images/logoHeader.png';
 import avatar from '../../images/avatar.png';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 export default function Header({
@@ -16,7 +17,9 @@ export default function Header({
   return (
     <header className="header">
       <div className="header__info-container">
-        <img className="header__logo" src={headerLogo} alt="logo" />
+        <Link to="/">
+          <img className="header__logo" src={headerLogo} alt="logo" />
+        </Link>
         <p className="header__info">
           {currentDate}, {city}
         </p>
@@ -30,8 +33,10 @@ export default function Header({
         >
           + Add Clothes
         </button>
-        <div className="header__username">Terrence Tegegne</div>
-        <img className="header__useravatar" src={avatar} alt="avatar" />
+        <Link className="header__userinfo-link" to="/profile">
+          <div className="header__username">Terrence Tegegne</div>
+          <img className="header__useravatar" src={avatar} alt="avatar" />
+        </Link>
       </div>
     </header>
   );
