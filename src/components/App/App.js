@@ -6,14 +6,22 @@ import Main from '../Main/Main';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import FormAdd from '../FormAdd/FormAdd';
 import ItemModal from '../ItemModal/ItemModal';
-import { getForecastWeather, parseWeatherData } from '../../utils/weatherApi';
+import CurrentTemperatureUnitContext from '../../contexts/CurrentTemperatureUnitContext';
+import {
+  getForecastWeather,
+  parseWeatherData,
+  getWeatherCard,
+} from '../../utils/weatherApi';
 
 export default function App() {
-  const [temp, setTemp] = useState(0);
-  const [sky, setSky] = useState('Clear');
+  const [tempObj, setTempObj] = useState(0);
+  // const [sky, setSky] = useState('Clear');
   const [city, setCity] = useState('');
   const [selectedCard, setSelectedCard] = useState({});
   const [activeModal, setActiveModal] = useState('');
+  const [skyCondition, setSkyCondition] = useState();
+  const [cards, setCards] = useState([]);
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState('F');
 
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
@@ -26,6 +34,10 @@ export default function App() {
 
   const closeModal = () => {
     setActiveModal('');
+  };
+
+  const handleToggleSwitchChange = () => {
+    //
   };
 
   useEffect(() => {
@@ -47,16 +59,10 @@ export default function App() {
       .then((data) => {
         const cityName = data && data.name;
         setCity(cityName);
-        const temperature = parseWeatherData(data);
-        setTemp(temperature);
-        if (data.weather[0].id >= 700 && data.weather[0].id <= 781) {
-          setSky('Clouds');
-        } else if (data.weather[0].main === 'Drizzle') {
-          setSky('Rain');
-        } else {
-          const skyCondition = data.weather[0].main;
-          setSky(skyCondition);
-        }
+        const temp = parseWeatherData(data);
+        setTempObj(temp);
+        const weatherCardImg = getWeatherCard(data);
+        setSkyCondition(weatherCardImg);
       })
       .catch((err) => {
         console.log(err);
@@ -65,22 +71,30 @@ export default function App() {
 
   return (
     <div className="App">
-      <Header city={city} handleCreateModal={handleCreateModal} />
-      <Main temp={temp} sky={sky} handleSelectedCard={handleSelectedCard} />
-      <Footer />
-      {activeModal === 'create' && (
-        <ModalWithForm
-          title={'New garment'}
-          buttonText={'Add garment'}
-          closeModal={closeModal}
-          name={'create'}
-        >
-          <FormAdd />
-        </ModalWithForm>
-      )}
-      {activeModal === 'preview' && (
-        <ItemModal selectedCard={selectedCard} closeModal={closeModal} />
-      )}
+      <CurrentTemperatureUnitContext.Provider
+        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+      >
+        <Header city={city} handleCreateModal={handleCreateModal} />
+        <Main
+          handleSelectedCard={handleSelectedCard}
+          skyCondition={skyCondition}
+          tempObj={tempObj}
+        />
+        <Footer />
+        {activeModal === 'create' && (
+          <ModalWithForm
+            title={'New garment'}
+            buttonText={'Add garment'}
+            closeModal={closeModal}
+            name={'create'}
+          >
+            <FormAdd />
+          </ModalWithForm>
+        )}
+        {activeModal === 'preview' && (
+          <ItemModal selectedCard={selectedCard} closeModal={closeModal} />
+        )}
+      </CurrentTemperatureUnitContext.Provider>
     </div>
   );
 }

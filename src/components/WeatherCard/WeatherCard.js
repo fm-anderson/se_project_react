@@ -1,22 +1,21 @@
+import { useContext } from 'react';
 import './WeatherCard.css';
-import { weatherOptions } from '../../utils/constants';
+// import { weatherOptions } from '../../utils/constants';
+import CurrentTemperatureUnitContext from '../../contexts/CurrentTemperatureUnitContext';
 
-export default function WeatherCard({ temp, sky }) {
-  const filteredImage = weatherOptions.filter((item) => {
-    return item.day === isDay() && item.type === sky;
-  });
-  const imageSrc = filteredImage[0].url;
-  const imageAlt = filteredImage[0].type;
-
-  function isDay() {
-    const hours = new Date().getHours();
-    return hours >= 6 && hours < 18;
-  }
+export default function WeatherCard({ tempObj, skyCondition }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   return (
     <section className="weather">
-      <div className="weather__info">{temp}°F</div>
-      <img alt={imageAlt} className="weather__image" src={imageSrc} />
+      <div className="weather__info">
+        {tempObj?.temp?.main}°{currentTemperatureUnit}
+      </div>
+      <img
+        alt={`Sky condition: ${tempObj?.temp?.weather}`}
+        className="weather__image"
+        src={skyCondition}
+      />
     </section>
   );
 }

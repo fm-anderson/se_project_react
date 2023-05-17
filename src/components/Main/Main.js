@@ -1,30 +1,36 @@
 import './Main.css';
+import { useContext } from 'react';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import ItemCard from '../ItemCard/ItemCard';
 import { defaultClothingItems } from '../../utils/constants';
+import CurrentTemperatureUnitContext from '../../contexts/CurrentTemperatureUnitContext';
 
-export default function Main({ temp, sky, handleSelectedCard }) {
+export default function Main({ handleSelectedCard, tempObj, skyCondition }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
   const weatherType = getWeatherType();
+
   const filteredCards = defaultClothingItems.filter((item) => {
     return item.weather.toLowerCase() === weatherType;
   });
 
   function getWeatherType() {
-    if (temp >= 86) {
+    if (tempObj?.temp?.main >= 86) {
       return 'hot';
-    } else if (temp >= 66 && temp <= 85) {
+    } else if (tempObj?.main >= 66 && tempObj?.temp?.main <= 85) {
       return 'warm';
-    } else if (temp <= 65) {
+    } else if (tempObj?.temp?.main <= 65) {
       return 'cold';
     }
   }
 
   return (
     <main className="main">
-      <WeatherCard temp={temp} sky={sky} />
+      <WeatherCard skyCondition={skyCondition} tempObj={tempObj} />
       <section className="main__card-section">
         <p className="main__weather-text">
-          Today is {temp}°F / You may want to wear:
+          Today is {tempObj?.temp?.main}°{currentTemperatureUnit} / You may want
+          to wear:
         </p>
         <div className="main__card-items">
           {filteredCards.map((item) => (

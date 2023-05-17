@@ -33,6 +33,24 @@ const longitude = -87.6231;
 
 const ApiKey = 'c73d8e7e57062e271ebf1cd81727cad4';
 
+export const dayWeatherCards = {
+  sunny: sunnyD,
+  cloudy: cloudyD,
+  rain: rainD,
+  storm: stormD,
+  snow: snowD,
+  fog: fogD,
+};
+
+export const nightWeatherCards = {
+  sunny: sunnyN,
+  cloudy: cloudyN,
+  rain: rainN,
+  storm: stormN,
+  snow: snowN,
+  fog: fogN,
+};
+
 const defaultClothingItems = [
   {
     _id: 0,
