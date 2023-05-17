@@ -6,9 +6,13 @@ export default function ModalWithForm({
   closeModal,
   buttonText,
   name,
+  handleClickOutsideModal,
 }) {
   return (
-    <div className={`modal modal_type_${name}`}>
+    <div
+      className={`modal modal_type_${name}`}
+      onMouseDown={handleClickOutsideModal}
+    >
       <div className="modal__content">
         <button className="modal__close" type="button" onClick={closeModal} />
         <h3 className="modal__title">{title}</h3>

@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
-import ModalWithForm from '../ModalWithForm/ModalWithForm';
-import FormAdd from '../FormAdd/FormAdd';
 import ItemModal from '../ItemModal/ItemModal';
 import Profile from '../Profile/Profile';
+import AddItemModal from '../AddItemModal/AddItemModal';
 import CurrentTemperatureUnitContext from '../../contexts/CurrentTemperatureUnitContext';
 import {
   getForecastWeather,
@@ -34,6 +33,12 @@ export default function App() {
 
   const closeModal = () => {
     setActiveModal('');
+  };
+
+  const handleClickOutsideModal = (e) => {
+    if (e.target.classList.contains('modal')) {
+      closeModal();
+    }
   };
 
   const handleToggleSwitchChange = () => {
@@ -100,17 +105,18 @@ export default function App() {
           </Switch>
           <Footer />
           {activeModal === 'create' && (
-            <ModalWithForm
-              title={'New garment'}
-              buttonText={'Add garment'}
+            <AddItemModal
               closeModal={closeModal}
-              name={'create'}
-            >
-              <FormAdd />
-            </ModalWithForm>
+              handleClickOutsideModal={handleClickOutsideModal}
+            />
           )}
           {activeModal === 'preview' && (
-            <ItemModal selectedCard={selectedCard} closeModal={closeModal} />
+            <ItemModal
+              name={'preview-card'}
+              selectedCard={selectedCard}
+              closeModal={closeModal}
+              handleClickOutsideModal={handleClickOutsideModal}
+            />
           )}
         </CurrentTemperatureUnitContext.Provider>
       </div>

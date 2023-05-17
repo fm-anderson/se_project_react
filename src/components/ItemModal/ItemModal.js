@@ -1,12 +1,20 @@
 import './ItemModal.css';
 
-export default function ItemModal({ selectedCard, closeModal }) {
+export default function ItemModal({
+  selectedCard,
+  closeModal,
+  name,
+  handleClickOutsideModal,
+}) {
   const capitalizeWord = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
 
   return (
-    <div className={`modal`}>
+    <div
+      className={`modal modal_type_${name}`}
+      onMouseDown={handleClickOutsideModal}
+    >
       <div className="modal__container">
         <button
           className="modal__preview-close"
