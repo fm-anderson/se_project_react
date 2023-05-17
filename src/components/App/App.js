@@ -1,4 +1,3 @@
-import './App.css';
 import { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -12,15 +11,14 @@ import {
   parseWeatherData,
   getWeatherCard,
 } from '../../utils/weatherApi';
+import './App.css';
 
 export default function App() {
   const [tempObj, setTempObj] = useState(0);
-  // const [sky, setSky] = useState('Clear');
   const [city, setCity] = useState('');
   const [selectedCard, setSelectedCard] = useState({});
   const [activeModal, setActiveModal] = useState('');
   const [skyCondition, setSkyCondition] = useState();
-  const [cards, setCards] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState('F');
 
   const handleSelectedCard = (card) => {
@@ -37,7 +35,9 @@ export default function App() {
   };
 
   const handleToggleSwitchChange = () => {
-    //
+    currentTemperatureUnit === 'F'
+      ? setCurrentTemperatureUnit('C')
+      : setCurrentTemperatureUnit('F');
   };
 
   useEffect(() => {
@@ -72,9 +72,13 @@ export default function App() {
   return (
     <div className="App">
       <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+        value={{ currentTemperatureUnit }}
       >
-        <Header city={city} handleCreateModal={handleCreateModal} />
+        <Header
+          city={city}
+          handleCreateModal={handleCreateModal}
+          handleToggleSwitchChange={handleToggleSwitchChange}
+        />
         <Main
           handleSelectedCard={handleSelectedCard}
           skyCondition={skyCondition}

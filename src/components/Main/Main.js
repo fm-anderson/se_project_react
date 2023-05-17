@@ -1,9 +1,9 @@
-import './Main.css';
 import { useContext } from 'react';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import ItemCard from '../ItemCard/ItemCard';
 import { defaultClothingItems } from '../../utils/constants';
 import CurrentTemperatureUnitContext from '../../contexts/CurrentTemperatureUnitContext';
+import './Main.css';
 
 export default function Main({ handleSelectedCard, tempObj, skyCondition }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
@@ -29,8 +29,8 @@ export default function Main({ handleSelectedCard, tempObj, skyCondition }) {
       <WeatherCard skyCondition={skyCondition} tempObj={tempObj} />
       <section className="main__card-section">
         <p className="main__weather-text">
-          Today is {tempObj?.temp?.main}°{currentTemperatureUnit} / You may want
-          to wear:
+          Today is {tempObj && tempObj.temp[currentTemperatureUnit]} / You may
+          want to wear:
         </p>
         <div className="main__card-items">
           {filteredCards.map((item) => (

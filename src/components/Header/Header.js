@@ -1,9 +1,13 @@
+import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 import headerLogo from '../../images/logoHeader.png';
 import avatar from '../../images/avatar.png';
 import './Header.css';
-import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 
-export default function Header({ city, handleCreateModal }) {
+export default function Header({
+  city,
+  handleCreateModal,
+  handleToggleSwitchChange,
+}) {
   const currentDate = new Date().toLocaleString('default', {
     month: 'long',
     day: 'numeric',
@@ -18,7 +22,7 @@ export default function Header({ city, handleCreateModal }) {
         </p>
       </div>
       <div className="header__user-container">
-        <ToggleSwitch />
+        <ToggleSwitch handleToggleSwitchChange={handleToggleSwitchChange} />
         <button
           className="header__add-button"
           type="button"
