@@ -91,7 +91,11 @@ export default function App() {
               />
             </Route>
             <Route path="/profile">
-              <Profile />
+              <Profile
+                handleSelectedCard={handleSelectedCard}
+                handleCreateModal={handleCreateModal}
+                tempObj={tempObj}
+              />
             </Route>
           </Switch>
           <Footer />
