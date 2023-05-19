@@ -4,11 +4,7 @@ import avatar from '../../images/avatar.png';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-export default function Header({
-  city,
-  handleCreateModal,
-  handleToggleSwitchChange,
-}) {
+export default function Header({ city, handleCreateModal }) {
   const currentDate = new Date().toLocaleString('default', {
     month: 'long',
     day: 'numeric',
@@ -25,7 +21,7 @@ export default function Header({
         </p>
       </div>
       <div className="header__user-container">
-        <ToggleSwitch handleToggleSwitchChange={handleToggleSwitchChange} />
+        <ToggleSwitch />
         <button
           className="header__add-button"
           type="button"

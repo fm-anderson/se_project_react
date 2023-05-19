@@ -119,13 +119,9 @@ export default function App() {
     <BrowserRouter>
       <div className="App">
         <CurrentTemperatureUnitContext.Provider
-          value={{ currentTemperatureUnit }}
+          value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
-          <Header
-            city={city}
-            handleCreateModal={handleCreateModal}
-            handleToggleSwitchChange={handleToggleSwitchChange}
-          />
+          <Header city={city} handleCreateModal={handleCreateModal} />
           <Switch>
             <Route exact path="/">
               <Main
