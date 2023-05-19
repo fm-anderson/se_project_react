@@ -1,23 +1,27 @@
 import { useContext } from 'react';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import ItemCard from '../ItemCard/ItemCard';
-import { defaultClothingItems } from '../../utils/constants';
 import CurrentTemperatureUnitContext from '../../contexts/CurrentTemperatureUnitContext';
 import './Main.css';
 
-export default function Main({ handleSelectedCard, tempObj, skyCondition }) {
+export default function Main({
+  cards,
+  handleSelectedCard,
+  tempObj,
+  skyCondition,
+}) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const weatherType = getWeatherType();
 
-  const filteredCards = defaultClothingItems.filter((item) => {
-    return item.weather.toLowerCase() === weatherType;
+  const filteredCards = cards.filter((item) => {
+    return item.weather?.toLowerCase() === weatherType;
   });
 
   function getWeatherType() {
     if (tempObj?.temp?.main >= 86) {
       return 'hot';
-    } else if (tempObj?.main >= 66 && tempObj?.temp?.main <= 85) {
+    } else if (tempObj?.temp?.main >= 66 && tempObj?.temp?.main <= 85) {
       return 'warm';
     } else if (tempObj?.temp?.main <= 65) {
       return 'cold';
@@ -33,13 +37,14 @@ export default function Main({ handleSelectedCard, tempObj, skyCondition }) {
           want to wear:
         </p>
         <div className="main__card-items">
-          {filteredCards.map((item) => (
-            <ItemCard
-              key={item._id}
-              item={item}
-              handleSelectedCard={handleSelectedCard}
-            />
-          ))}
+          {Array.isArray(filteredCards) &&
+            filteredCards.map((item) => (
+              <ItemCard
+                key={item.id}
+                item={item}
+                handleSelectedCard={handleSelectedCard}
+              />
+            ))}
         </div>
       </section>
     </main>

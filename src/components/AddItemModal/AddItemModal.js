@@ -2,14 +2,19 @@ import { useState, useEffect } from 'react';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import FormAdd from '../FormAdd/FormAdd';
 
-const AddItemModal = ({ isOpen, closeModal, handleClickOutsideModal }) => {
+const AddItemModal = ({
+  isOpen,
+  closeModal,
+  handleClickOutsideModal,
+  handleAddItemSubmit,
+}) => {
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [weather, setWeather] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
-    // onAddItem({ name, imageUrl, weather });
+    handleAddItemSubmit({ name, imageUrl, weather });
   }
 
   function handleNameChange(e) {

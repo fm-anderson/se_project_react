@@ -2,8 +2,8 @@ import ItemCard from '../ItemCard/ItemCard';
 import './ClothesSection.css';
 
 export default function ClothesSection({
+  cards,
   handleSelectedCard,
-  filteredCards,
   handleCreateModal,
 }) {
   return (
@@ -19,10 +19,10 @@ export default function ClothesSection({
         </button>
       </div>
       <div className="clothes-section__cards-container">
-        {filteredCards.map((item) => {
+        {cards.map((item) => {
           return (
             <ItemCard
-              key={item._id}
+              key={item.id}
               item={item}
               handleSelectedCard={handleSelectedCard}
             />

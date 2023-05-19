@@ -23,7 +23,7 @@ export default function ItemModal({
         ></button>
         <img
           className="modal__preview-image"
-          src={selectedCard.link}
+          src={selectedCard.imageUrl}
           alt={selectedCard.name}
         />
         <div className="modal__preview-text">

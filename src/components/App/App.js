@@ -11,12 +11,14 @@ import {
   parseWeatherData,
   getWeatherCard,
 } from '../../utils/weatherApi';
+import { getClothingItems, addClothingItem } from '../../utils/api';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 export default function App() {
   const [tempObj, setTempObj] = useState(0);
   const [city, setCity] = useState('');
+  const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [activeModal, setActiveModal] = useState('');
   const [skyCondition, setSkyCondition] = useState();
@@ -45,6 +47,17 @@ export default function App() {
     currentTemperatureUnit === 'F'
       ? setCurrentTemperatureUnit('C')
       : setCurrentTemperatureUnit('F');
+  };
+
+  const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
+    addClothingItem({ name, imageUrl, weather })
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -76,6 +89,17 @@ export default function App() {
       });
   }, []);
 
+  useEffect(() => {
+    getClothingItems()
+      .then((data) => {
+        setCards(data);
+        closeModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -93,13 +117,14 @@ export default function App() {
                 handleSelectedCard={handleSelectedCard}
                 skyCondition={skyCondition}
                 tempObj={tempObj}
+                cards={cards}
               />
             </Route>
             <Route path="/profile">
               <Profile
                 handleSelectedCard={handleSelectedCard}
                 handleCreateModal={handleCreateModal}
-                tempObj={tempObj}
+                cards={cards}
               />
             </Route>
           </Switch>
@@ -108,6 +133,7 @@ export default function App() {
             <AddItemModal
               closeModal={closeModal}
               handleClickOutsideModal={handleClickOutsideModal}
+              handleAddItemSubmit={handleAddItemSubmit}
             />
           )}
           {activeModal === 'preview' && (
