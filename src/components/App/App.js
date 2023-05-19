@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
-import ItemModal from '../ItemModal/ItemModal';
 import Profile from '../Profile/Profile';
+import ItemModal from '../ItemModal/ItemModal';
 import AddItemModal from '../AddItemModal/AddItemModal';
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import CurrentTemperatureUnitContext from '../../contexts/CurrentTemperatureUnitContext';
 import {
   getForecastWeather,
   parseWeatherData,
   getWeatherCard,
 } from '../../utils/weatherApi';
-import { getClothingItems, addClothingItem } from '../../utils/api';
+import { getClothingItems, addClothingItem, deleteCard } from '../../utils/api';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 
@@ -31,6 +32,10 @@ export default function App() {
 
   const handleCreateModal = () => {
     setActiveModal('create');
+  };
+
+  const handleConfirmationModal = () => {
+    setActiveModal('confirmation');
   };
 
   const closeModal = () => {
@@ -60,6 +65,17 @@ export default function App() {
       });
   };
 
+  const handleCardDelete = () => {
+    deleteCard(selectedCard.id)
+      .then(() => {
+        setCards(cards.filter((item) => item.id !== selectedCard.id));
+        closeModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     if (!activeModal) return;
     const handleEsc = (e) => {
@@ -68,7 +84,6 @@ export default function App() {
       }
     };
     window.addEventListener('keydown', handleEsc);
-    // clean up function
     return () => {
       window.removeEventListener('keydown', handleEsc);
     };
@@ -142,6 +157,13 @@ export default function App() {
               selectedCard={selectedCard}
               closeModal={closeModal}
               handleClickOutsideModal={handleClickOutsideModal}
+              handleConfirmationModal={handleConfirmationModal}
+            />
+          )}
+          {activeModal === 'confirmation' && (
+            <ConfirmationModal
+              closeModal={closeModal}
+              handleCardDelete={handleCardDelete}
             />
           )}
         </CurrentTemperatureUnitContext.Provider>

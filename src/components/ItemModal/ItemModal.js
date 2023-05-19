@@ -5,6 +5,7 @@ export default function ItemModal({
   closeModal,
   name,
   handleClickOutsideModal,
+  handleConfirmationModal,
 }) {
   const capitalizeWord = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
@@ -15,7 +16,7 @@ export default function ItemModal({
       className={`modal modal_type_${name}`}
       onMouseDown={handleClickOutsideModal}
     >
-      <div className="modal__container">
+      <div className="modal__preview-container">
         <button
           className="modal__preview-close"
           type="button"
@@ -27,10 +28,19 @@ export default function ItemModal({
           alt={selectedCard.name}
         />
         <div className="modal__preview-text">
-          <div className="modal__preview-name">{selectedCard.name}</div>
-          <div className="modal__preview-weather">
-            Weather type: {capitalizeWord(selectedCard.weather)}
+          <div>
+            <div className="modal__preview-name">{selectedCard.name}</div>
+            <div className="modal__preview-weather">
+              Weather type: {capitalizeWord(selectedCard.weather)}
+            </div>
           </div>
+          <button
+            type="button"
+            className="modal__preview-delete"
+            onClick={handleConfirmationModal}
+          >
+            Delete item
+          </button>
         </div>
       </div>
     </div>

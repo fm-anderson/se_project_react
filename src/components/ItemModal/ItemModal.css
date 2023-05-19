@@ -1,4 +1,4 @@
-.modal__container {
+.modal__preview-container {
   position: relative;
   width: 498px;
   height: 610px;
@@ -14,7 +14,9 @@
   top: calc(4%);
   left: calc(100% - 40px);
   border: none;
-  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
 }
 
@@ -33,6 +35,9 @@
 }
 
 .modal__preview-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin: 0;
   font-size: 20px;
   line-height: 1.2;
@@ -45,4 +50,17 @@
 .modal__preview-weather {
   margin-top: 12px;
   margin-bottom: 32px;
+}
+
+.modal__preview-delete {
+  cursor: pointer;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  color: #ff4d00;
+  margin-right: 22px;
+}
+
+.modal__preview-delete:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }

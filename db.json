@@ -107,18 +107,6 @@
       "weather": "cold",
       "imageUrl": "https://images.unsplash.com/photo-1617118602199-d3c05ae37ed8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80",
       "id": 17
-    },
-    {
-      "name": "Jacket",
-      "imageUrl": "https://thumbs.dreamstime.com/b/sport-jacket-icon-icon-cartoon-varsity-red-style-isolated-vector-illustration-88303045.jpg",
-      "weather": "cold",
-      "id": 18
-    },
-    {
-      "name": "Shirt",
-      "imageUrl": "https://thumbs.dreamstime.com/b/vector-cartoon-turquoise-men-shirt-roll-up-sleeves-casual-131998679.jpg",
-      "weather": "warm",
-      "id": 19
     }
   ]
 }

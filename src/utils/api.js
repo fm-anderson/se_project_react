@@ -1,6 +1,7 @@
-const baseUrl = 'http://localhost:3001';
-
+// --- baseUrl for github pages. Will deploy after code review is complete. ---
 // const baseUrl = 'https://my-json-server.typicode.com/fm-anderson/se_project_react';
+
+const baseUrl = 'http://localhost:3001';
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -30,5 +31,14 @@ export const addClothingItem = ({ name, imageUrl, weather }) => {
       imageUrl,
       weather,
     }),
+  }).then((res) => checkResponse(res));
+};
+
+export const deleteCard = (id) => {
+  return fetch(`${baseUrl}/items/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   }).then((res) => checkResponse(res));
 };
