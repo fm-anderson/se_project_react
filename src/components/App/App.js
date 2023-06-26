@@ -15,6 +15,7 @@ import {
 import { getClothingItems, addClothingItem, deleteCard } from '../../utils/api';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
+import RegisterModal from '../RegisterModal/RegisterModal';
 
 export default function App() {
   const [tempObj, setTempObj] = useState(0);
@@ -140,6 +141,7 @@ export default function App() {
             </Route>
           </Switch>
           <Footer />
+          {/* <RegisterModal /> */}
           {activeModal === 'create' && (
             <AddItemModal
               closeModal={closeModal}
