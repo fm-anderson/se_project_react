@@ -4,7 +4,7 @@ import avatar from '../../images/avatar.png';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-export default function Header({ city, handleCreateModal }) {
+export default function Header({ city, handleOpenModal, isLoggedIn }) {
   const currentDate = new Date().toLocaleString('default', {
     month: 'long',
     day: 'numeric',
@@ -22,17 +22,36 @@ export default function Header({ city, handleCreateModal }) {
       </div>
       <div className="header__user-container">
         <ToggleSwitch />
-        <button
-          className="header__add-button"
-          type="button"
-          onClick={handleCreateModal}
-        >
-          + Add Clothes
-        </button>
-        <Link className="header__userinfo-link" to="/profile">
-          <div className="header__username">Terrence Tegegne</div>
-          <img className="header__useravatar" src={avatar} alt="avatar" />
-        </Link>
+        {isLoggedIn ? (
+          <>
+            <button
+              className="header__button"
+              type="button"
+              onClick={() => handleOpenModal('create')}
+            >
+              + Add Clothes
+            </button>
+            <Link className="header__userinfo-link" to="/profile">
+              <div className="header__username">Terrence Tegegne</div>
+              <img className="header__useravatar" src={avatar} alt="avatar" />
+            </Link>
+          </>
+        ) : (
+          <>
+            <button
+              className="header__button"
+              onClick={() => handleOpenModal('signup')}
+            >
+              Sign Up
+            </button>
+            <button
+              className="header__button"
+              onClick={() => handleOpenModal('login')}
+            >
+              Log In
+            </button>
+          </>
+        )}
       </div>
     </header>
   );

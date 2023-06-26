@@ -1,56 +1,64 @@
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import './RegisterModal.css';
 
-export default function RegisterModal() {
+export default function RegisterModal({
+  name,
+  closeModal,
+  handleClickOutsideModal,
+}) {
   return (
-    <ModalWithForm title={'Sign up'} buttonText={'Next'}>
-      <label className="modal__label">
-        Email*
-        <input
-          className="modal__input"
-          type="email"
-          placeholder="Email"
-          required
-          name="email"
-          id="inputEmail"
-          minLength="1"
-          maxLength="30"
-        />
-      </label>
-      <label className="modal__label">
-        Password*
-        <input
-          className="modal__input"
-          placeholder="Password"
-          required
-          name="password"
-          id="inputPassword"
-          type="password"
-        />
-      </label>
-      <label className="modal__label">
-        Name*
-        <input
-          className="modal__input"
-          type="text"
-          placeholder="Name"
-          name="name"
-          id="inputName"
-          required
-          minLength="1"
-          maxLength="30"
-        />
-      </label>
-      <label className="modal__label">
-        Avatar
-        <input
-          className="modal__input"
-          placeholder="Avatar URL"
-          name="avatarUrl"
-          id="inputAvatarUrl"
-          type="url"
-        />
-      </label>
+    <ModalWithForm
+      name={name}
+      title={'Sign up'}
+      buttonText={'Next'}
+      closeModal={closeModal}
+      handleClickOutsideModal={handleClickOutsideModal}
+    >
+      <label className="modal__label">Email</label>
+      <input
+        className="modal__input modal__input_type_text"
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email"
+        required
+        minLength="1"
+        maxLength="30"
+      />
+
+      <label className="modal__label">Password</label>
+      <input
+        className="modal__input modal__input_type_text"
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        required
+        minLength="9"
+        maxLength="30"
+      />
+
+      <label className="modal__label">Name</label>
+      <input
+        className="modal__input modal__input_type_text"
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Name"
+        required
+        minLength="2"
+        maxLength="30"
+      />
+
+      <label className="modal__label">Avatar URL</label>
+      <input
+        className="modal__input modal__input_type_text"
+        type="url"
+        name="avatar"
+        id="avatar"
+        placeholder="Avatar URL"
+        required
+      />
     </ModalWithForm>
   );
 }

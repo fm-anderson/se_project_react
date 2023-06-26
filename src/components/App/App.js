@@ -16,6 +16,7 @@ import { getClothingItems, addClothingItem, deleteCard } from '../../utils/api';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import RegisterModal from '../RegisterModal/RegisterModal';
+import LoginModal from '../LoginModal/LoginModal';
 
 export default function App() {
   const [tempObj, setTempObj] = useState(0);
@@ -26,17 +27,15 @@ export default function App() {
   const [skyCondition, setSkyCondition] = useState();
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState('F');
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
     setActiveModal('preview');
   };
 
-  const handleCreateModal = () => {
-    setActiveModal('create');
-  };
-
-  const handleConfirmationModal = () => {
-    setActiveModal('confirmation');
+  const handleOpenModal = (modal) => {
+    setActiveModal(modal);
   };
 
   const closeModal = () => {
@@ -122,7 +121,11 @@ export default function App() {
         <CurrentTemperatureUnitContext.Provider
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
-          <Header city={city} handleCreateModal={handleCreateModal} />
+          <Header
+            city={city}
+            handleOpenModal={handleOpenModal}
+            isLoggedIn={isLoggedIn}
+          />
           <Switch>
             <Route exact path="/">
               <Main
@@ -135,13 +138,26 @@ export default function App() {
             <Route path="/profile">
               <Profile
                 handleSelectedCard={handleSelectedCard}
-                handleCreateModal={handleCreateModal}
+                handleOpenModal={handleOpenModal}
                 cards={cards}
               />
             </Route>
           </Switch>
           <Footer />
-          {/* <RegisterModal /> */}
+          {activeModal === 'signup' && (
+            <RegisterModal
+              name={'signup'}
+              closeModal={closeModal}
+              handleClickOutsideModal={handleClickOutsideModal}
+            />
+          )}
+          {activeModal === 'login' && (
+            <LoginModal
+              name={'login'}
+              closeModal={closeModal}
+              handleClickOutsideModal={handleClickOutsideModal}
+            />
+          )}
           {activeModal === 'create' && (
             <AddItemModal
               closeModal={closeModal}
@@ -155,7 +171,7 @@ export default function App() {
               selectedCard={selectedCard}
               closeModal={closeModal}
               handleClickOutsideModal={handleClickOutsideModal}
-              handleConfirmationModal={handleConfirmationModal}
+              handleOpenModal={handleOpenModal}
             />
           )}
           {activeModal === 'confirmation' && (

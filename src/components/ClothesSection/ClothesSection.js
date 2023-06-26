@@ -4,7 +4,7 @@ import './ClothesSection.css';
 export default function ClothesSection({
   cards,
   handleSelectedCard,
-  handleCreateModal,
+  handleOpenModal,
 }) {
   return (
     <div className="clothes-section">
@@ -13,7 +13,7 @@ export default function ClothesSection({
         <button
           className="clothes-section__add-button"
           type="button"
-          onClick={handleCreateModal}
+          onClick={() => handleOpenModal('create')}
         >
           + Add new
         </button>

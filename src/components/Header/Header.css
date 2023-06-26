@@ -33,7 +33,7 @@
   align-items: center;
 }
 
-.header__add-button {
+.header__button {
   gap: 20px;
   background-color: transparent;
   border: none;

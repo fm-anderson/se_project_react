@@ -5,7 +5,7 @@ export default function ItemModal({
   closeModal,
   name,
   handleClickOutsideModal,
-  handleConfirmationModal,
+  handleOpenModal,
 }) {
   const capitalizeWord = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
@@ -37,7 +37,7 @@ export default function ItemModal({
           <button
             type="button"
             className="modal__preview-delete"
-            onClick={handleConfirmationModal}
+            onClick={() => handleOpenModal('confirmation')}
           >
             Delete item
           </button>

@@ -5,7 +5,7 @@ import './Profile.css';
 export default function Profile({
   cards,
   handleSelectedCard,
-  handleCreateModal,
+  handleOpenModal,
 }) {
   return (
     <div className="profile">
@@ -13,7 +13,7 @@ export default function Profile({
       <ClothesSection
         cards={cards}
         handleSelectedCard={handleSelectedCard}
-        handleCreateModal={handleCreateModal}
+        handleOpenModal={handleOpenModal}
       />
     </div>
   );
