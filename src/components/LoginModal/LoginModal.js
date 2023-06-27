@@ -1,5 +1,4 @@
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
-import './LoginModal.css';
 
 export default function LoginModal({
   name,
@@ -25,7 +24,6 @@ export default function LoginModal({
         minLength="1"
         maxLength="30"
       />
-
       <label className="modal__label">Password</label>
       <input
         className="modal__input modal__input_type_text"

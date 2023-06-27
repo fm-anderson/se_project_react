@@ -13,7 +13,7 @@ import {
   getWeatherCard,
 } from '../../utils/weatherApi';
 import { getClothingItems, addClothingItem, deleteCard } from '../../utils/api';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import RegisterModal from '../RegisterModal/RegisterModal';
 import LoginModal from '../LoginModal/LoginModal';
@@ -136,11 +136,15 @@ export default function App() {
               />
             </Route>
             <Route path="/profile">
-              <Profile
-                handleSelectedCard={handleSelectedCard}
-                handleOpenModal={handleOpenModal}
-                cards={cards}
-              />
+              {isLoggedIn ? (
+                <Profile
+                  handleSelectedCard={handleSelectedCard}
+                  handleOpenModal={handleOpenModal}
+                  cards={cards}
+                />
+              ) : (
+                <Redirect to="/" />
+              )}
             </Route>
           </Switch>
           <Footer />
