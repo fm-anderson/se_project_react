@@ -116,7 +116,7 @@ export default function App() {
   };
 
   const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
-    addClothingItem({ name, imageUrl, weather })
+    addClothingItem({ name, imageUrl, weather }, localStorage.getItem('jwt'))
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeModal();
@@ -127,9 +127,9 @@ export default function App() {
   };
 
   const handleCardDelete = () => {
-    deleteCard(selectedCard.id)
+    deleteCard(selectedCard._id, localStorage.getItem('jwt'))
       .then(() => {
-        setCards(cards.filter((item) => item.id !== selectedCard.id));
+        setCards(cards.filter((item) => item._id !== selectedCard._id));
         closeModal();
       })
       .catch((err) => {
@@ -207,6 +207,7 @@ export default function App() {
                   handleSelectedCard={handleSelectedCard}
                   handleOpenModal={handleOpenModal}
                   cards={cards}
+                  currentUser={currentUser}
                 />
               ) : (
                 <Redirect to="/" />

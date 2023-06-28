@@ -40,7 +40,7 @@ export default function Main({
           {Array.isArray(filteredCards) &&
             filteredCards.map((item) => (
               <ItemCard
-                key={item.id}
+                key={item._id}
                 item={item}
                 handleSelectedCard={handleSelectedCard}
               />
