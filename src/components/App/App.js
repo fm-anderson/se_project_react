@@ -17,6 +17,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import RegisterModal from '../RegisterModal/RegisterModal';
 import LoginModal from '../LoginModal/LoginModal';
+import { signup, signin, checkToken } from '../../utils/auth';
 
 export default function App() {
   const [tempObj, setTempObj] = useState(0);
@@ -28,6 +29,8 @@ export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState('F');
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
@@ -52,6 +55,49 @@ export default function App() {
     currentTemperatureUnit === 'F'
       ? setCurrentTemperatureUnit('C')
       : setCurrentTemperatureUnit('F');
+  };
+
+  const handleSignup = (data) => {
+    setIsLoading(true);
+    const { email, password } = data;
+    console.log(`inside signup function | data: ${data}`);
+
+    signup(data)
+      .then((res) => {
+        handleLogin({ email, password });
+        console.log(res);
+        closeModal();
+      })
+      .catch((err) => {
+        console.error(`Error: ${err}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleLogin = ({ email, password }) => {
+    setIsLoading(true);
+    const user = { email, password };
+
+    signin(user)
+      .then((res) => {
+        localStorage.setItem('jwt', res.token);
+        checkToken(res.token).then((res) => {
+          setCurrentUser(res);
+          console.log(currentUser);
+          setIsLoggedIn(true);
+
+          // TODO: Redirect user to /profile
+        });
+        closeModal();
+      })
+      .catch((err) => {
+        console.error(`Error: ${err}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
@@ -153,6 +199,7 @@ export default function App() {
               name={'signup'}
               closeModal={closeModal}
               handleClickOutsideModal={handleClickOutsideModal}
+              handleSignup={handleSignup}
             />
           )}
           {activeModal === 'login' && (
@@ -160,6 +207,7 @@ export default function App() {
               name={'login'}
               closeModal={closeModal}
               handleClickOutsideModal={handleClickOutsideModal}
+              handleLogin={handleLogin}
             />
           )}
           {activeModal === 'create' && (

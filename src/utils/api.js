@@ -6,10 +6,14 @@ const baseUrl = 'http://localhost:3001';
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
-  } else {
-    return Promise.reject(`Error ${res.status}`);
   }
+  return Promise.reject(`Error: ${res.status}`);
 };
+
+export async function request(url, options) {
+  const res = await fetch(url, options);
+  return checkResponse(res);
+}
 
 export const getClothingItems = () => {
   return fetch(`${baseUrl}/items`, {

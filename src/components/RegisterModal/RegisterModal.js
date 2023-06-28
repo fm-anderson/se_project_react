@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import './RegisterModal.css';
 
@@ -5,7 +6,20 @@ export default function RegisterModal({
   name,
   closeModal,
   handleClickOutsideModal,
+  handleSignup,
 }) {
+  const [registerValues, setRegisterValues] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterValues({ ...registerValues, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSignup(registerValues);
+  };
+
   return (
     <ModalWithForm
       name={name}
@@ -13,10 +27,11 @@ export default function RegisterModal({
       buttonText={'Next'}
       closeModal={closeModal}
       handleClickOutsideModal={handleClickOutsideModal}
+      handleSubmit={handleSubmit}
     >
       <label className="modal__label">Email</label>
       <input
-        className="modal__input modal__input_type_text"
+        className="modal__input"
         type="email"
         name="email"
         id="email"
@@ -24,11 +39,13 @@ export default function RegisterModal({
         required
         minLength="1"
         maxLength="30"
+        value={registerValues.email || ''}
+        onChange={handleInputChange}
       />
 
       <label className="modal__label">Password</label>
       <input
-        className="modal__input modal__input_type_text"
+        className="modal__input"
         type="password"
         name="password"
         id="password"
@@ -36,11 +53,13 @@ export default function RegisterModal({
         required
         minLength="9"
         maxLength="30"
+        value={registerValues.password || ''}
+        onChange={handleInputChange}
       />
 
       <label className="modal__label">Name</label>
       <input
-        className="modal__input modal__input_type_text"
+        className="modal__input"
         type="text"
         name="name"
         id="name"
@@ -48,16 +67,20 @@ export default function RegisterModal({
         required
         minLength="2"
         maxLength="30"
+        value={registerValues.name || ''}
+        onChange={handleInputChange}
       />
 
       <label className="modal__label">Avatar URL</label>
       <input
-        className="modal__input modal__input_type_text"
+        className="modal__input"
         type="url"
         name="avatar"
         id="avatar"
         placeholder="Avatar URL"
         required
+        value={registerValues.avatar || ''}
+        onChange={handleInputChange}
       />
     </ModalWithForm>
   );
