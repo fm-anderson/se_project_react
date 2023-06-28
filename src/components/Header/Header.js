@@ -4,7 +4,12 @@ import avatar from '../../images/avatar.png';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-export default function Header({ city, handleOpenModal, isLoggedIn }) {
+export default function Header({
+  city,
+  handleOpenModal,
+  isLoggedIn,
+  currentUser,
+}) {
   const currentDate = new Date().toLocaleString('default', {
     month: 'long',
     day: 'numeric',
@@ -32,8 +37,14 @@ export default function Header({ city, handleOpenModal, isLoggedIn }) {
               + Add Clothes
             </button>
             <Link className="header__userinfo-link" to="/profile">
-              <div className="header__username">Terrence Tegegne</div>
-              <img className="header__useravatar" src={avatar} alt="avatar" />
+              <div className="header__username">
+                {currentUser ? currentUser.data.name : 'Terrence Tegegne'}
+              </div>
+              <img
+                className="header__useravatar"
+                src={currentUser ? currentUser.data.avatar : avatar}
+                alt="avatar"
+              />
             </Link>
           </>
         ) : (

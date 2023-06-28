@@ -1,16 +1,6 @@
 import { request } from './api';
 const baseUrl = 'http://localhost:3001';
 
-// function signup(data) {
-//   const { name, avatar, email, password } = data;
-
-//   return request(`${baseUrl}/signup`, {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ name, avatar, email, password }),
-//   });
-// }
-
 function signup(data) {
   const { name, avatar, email, password } = data;
 
@@ -26,7 +16,6 @@ function signup(data) {
     }
     return Promise.reject(`Error: ${res.status}`);
   });
-  // .then((res) => res);
 }
 
 function signin(user) {

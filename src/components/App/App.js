@@ -85,7 +85,7 @@ export default function App() {
         localStorage.setItem('jwt', res.token);
         checkToken(res.token).then((res) => {
           setCurrentUser(res);
-          console.log(currentUser);
+          // console.log(currentUser);
           setIsLoggedIn(true);
 
           // TODO: Redirect user to /profile
@@ -98,6 +98,21 @@ export default function App() {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const confirmToken = () => {
+    const jwt = localStorage.getItem('jwt');
+
+    if (jwt) {
+      checkToken(jwt)
+        .then((res) => {
+          setCurrentUser(res);
+          setIsLoggedIn(true);
+        })
+        .catch((err) => {
+          console.log('user not found', err.message);
+        });
+    }
   };
 
   const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
@@ -161,6 +176,10 @@ export default function App() {
       });
   }, []);
 
+  useEffect(() => {
+    confirmToken();
+  }, [localStorage.getItem('jwt')]);
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -171,6 +190,7 @@ export default function App() {
             city={city}
             handleOpenModal={handleOpenModal}
             isLoggedIn={isLoggedIn}
+            currentUser={currentUser}
           />
           <Switch>
             <Route exact path="/">
