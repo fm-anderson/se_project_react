@@ -6,7 +6,7 @@ const AddItemModal = ({
   isOpen,
   closeModal,
   handleClickOutsideModal,
-  handleAddItemSubmit,
+  handleAddItem,
 }) => {
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -14,7 +14,7 @@ const AddItemModal = ({
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleAddItemSubmit({ name, imageUrl, weather });
+    handleAddItem({ name, imageUrl, weather });
   }
 
   function handleNameChange(e) {

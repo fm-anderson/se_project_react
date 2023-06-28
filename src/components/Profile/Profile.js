@@ -9,7 +9,7 @@ export default function Profile({
 }) {
   return (
     <div className="profile">
-      <SideBar />
+      <SideBar handleOpenModal={handleOpenModal} />
       <ClothesSection
         cards={cards}
         handleSelectedCard={handleSelectedCard}

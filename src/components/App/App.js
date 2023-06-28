@@ -17,8 +17,9 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import RegisterModal from '../RegisterModal/RegisterModal';
 import LoginModal from '../LoginModal/LoginModal';
-import { signup, signin, checkToken } from '../../utils/auth';
+import { signup, signin, checkToken, updateProfile } from '../../utils/auth';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import EditProfileModal from '../EditProfileModal/EditProfileModal';
 
 export default function App() {
   const [tempObj, setTempObj] = useState(0);
@@ -89,8 +90,6 @@ export default function App() {
           setCurrentUser(res.data);
           setNoAvatar(currentUser?.name.slice(0, 1));
           setIsLoggedIn(true);
-
-          // TODO: Redirect user to /profile
         });
         closeModal();
       })
@@ -117,7 +116,23 @@ export default function App() {
     }
   };
 
-  const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
+  function handleUpdateProfile(data) {
+    setIsLoading(true);
+
+    updateProfile(data, localStorage.getItem('jwt'))
+      .then((res) => {
+        setCurrentUser(res.data);
+        closeModal();
+      })
+      .catch((err) => {
+        console.error(`Error: ${err.message}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  const handleAddItem = ({ name, imageUrl, weather }) => {
     addClothingItem({ name, imageUrl, weather }, localStorage.getItem('jwt'))
       .then((res) => {
         setCards([res, ...cards]);
@@ -213,6 +228,14 @@ export default function App() {
               </Route>
             </Switch>
             <Footer />
+            {activeModal === 'editProfile' && (
+              <EditProfileModal
+                name={'editProfile'}
+                closeModal={closeModal}
+                handleClickOutsideModal={handleClickOutsideModal}
+                handleUpdateProfile={handleUpdateProfile}
+              />
+            )}
             {activeModal === 'signup' && (
               <RegisterModal
                 name={'signup'}
@@ -233,7 +256,7 @@ export default function App() {
               <AddItemModal
                 closeModal={closeModal}
                 handleClickOutsideModal={handleClickOutsideModal}
-                handleAddItemSubmit={handleAddItemSubmit}
+                handleAddItem={handleAddItem}
               />
             )}
             {activeModal === 'preview' && (

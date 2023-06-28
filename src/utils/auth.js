@@ -38,4 +38,17 @@ function checkToken(token) {
   });
 }
 
-export { signup, signin, checkToken };
+function updateProfile(data, token) {
+  const { name, avatar } = data;
+
+  return request(`${baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  });
+}
+
+export { signup, signin, checkToken, updateProfile };

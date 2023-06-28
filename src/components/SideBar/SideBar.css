@@ -1,10 +1,9 @@
 .sidebar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  font-size: 20px;
+  font-weight: 700;
 }
 
-.sidebar__userAvatar {
+/* .sidebar__userAvatar {
   width: 56px;
   height: 56px;
 }
@@ -16,4 +15,53 @@
   line-height: 1.2;
   color: #000000;
   font-weight: 700;
+} */
+
+.sidebar__info {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__username {
+  margin: 0 16px;
+}
+
+.sidebar__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 100%;
+}
+
+.sidebar__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.sidebar__button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin: 14px 0 0 0;
+  font-weight: 700;
+  transition: 0.1s;
+}
+
+.sidebar__button:hover {
+  color: rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+}
+
+.sidebar__noavatar {
+  display: flex;
+  width: 56px;
+  height: 56px;
+  border-radius: 100%;
+  background-color: blue;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
 }
