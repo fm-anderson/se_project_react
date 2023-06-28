@@ -1,15 +1,13 @@
+import { useContext } from 'react';
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 import headerLogo from '../../images/logoHeader.png';
-import avatar from '../../images/avatar.png';
 import { Link } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Header.css';
 
-export default function Header({
-  city,
-  handleOpenModal,
-  isLoggedIn,
-  currentUser,
-}) {
+export default function Header({ city, handleOpenModal }) {
+  const { currentUser, isLoggedIn, noAvatar } = useContext(CurrentUserContext);
+
   const currentDate = new Date().toLocaleString('default', {
     month: 'long',
     day: 'numeric',
@@ -38,13 +36,17 @@ export default function Header({
             </button>
             <Link className="header__userinfo-link" to="/profile">
               <div className="header__username">
-                {currentUser ? currentUser.data.name : 'Terrence Tegegne'}
+                {currentUser ? currentUser.name : 'Terrence Tegegne'}
               </div>
-              <img
-                className="header__useravatar"
-                src={currentUser ? currentUser.data.avatar : avatar}
-                alt="avatar"
-              />
+              {currentUser ? (
+                <img
+                  className="header__useravatar"
+                  src={currentUser.avatar}
+                  alt="avatar"
+                />
+              ) : (
+                <p className="header__noavatar">{noAvatar}</p>
+              )}
             </Link>
           </>
         ) : (

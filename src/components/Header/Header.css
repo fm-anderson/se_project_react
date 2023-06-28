@@ -79,3 +79,14 @@
   width: 40px;
   height: 40px;
 }
+
+.header__noavatar {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  background-color: #b1b1ef;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}

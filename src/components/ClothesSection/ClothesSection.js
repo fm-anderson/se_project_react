@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import ItemCard from '../ItemCard/ItemCard';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './ClothesSection.css';
 
 export default function ClothesSection({
@@ -6,6 +8,12 @@ export default function ClothesSection({
   handleSelectedCard,
   handleOpenModal,
 }) {
+  const { currentUser } = useContext(CurrentUserContext);
+
+  const filteredCards = cards.filter((item) => {
+    return item.owner === currentUser?._id;
+  });
+
   return (
     <div className="clothes-section">
       <div className="clothes-section__header">
@@ -19,15 +27,16 @@ export default function ClothesSection({
         </button>
       </div>
       <div className="clothes-section__cards-container">
-        {cards.map((item) => {
-          return (
-            <ItemCard
-              key={item.id}
-              item={item}
-              handleSelectedCard={handleSelectedCard}
-            />
-          );
-        })}
+        {Array.isArray(filteredCards) &&
+          filteredCards.map((item) => {
+            return (
+              <ItemCard
+                key={item._id}
+                item={item}
+                handleSelectedCard={handleSelectedCard}
+              />
+            );
+          })}
       </div>
     </div>
   );

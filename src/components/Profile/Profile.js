@@ -6,11 +6,10 @@ export default function Profile({
   cards,
   handleSelectedCard,
   handleOpenModal,
-  currentUser,
 }) {
   return (
     <div className="profile">
-      <SideBar currentUser={currentUser} />
+      <SideBar />
       <ClothesSection
         cards={cards}
         handleSelectedCard={handleSelectedCard}

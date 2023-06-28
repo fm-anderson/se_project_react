@@ -18,6 +18,7 @@ import './App.css';
 import RegisterModal from '../RegisterModal/RegisterModal';
 import LoginModal from '../LoginModal/LoginModal';
 import { signup, signin, checkToken } from '../../utils/auth';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 export default function App() {
   const [tempObj, setTempObj] = useState(0);
@@ -31,6 +32,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [noAvatar, setNoAvatar] = useState('');
 
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
@@ -84,8 +86,8 @@ export default function App() {
       .then((res) => {
         localStorage.setItem('jwt', res.token);
         checkToken(res.token).then((res) => {
-          setCurrentUser(res);
-          // console.log(currentUser);
+          setCurrentUser(res.data);
+          setNoAvatar(currentUser?.name.slice(0, 1));
           setIsLoggedIn(true);
 
           // TODO: Redirect user to /profile
@@ -106,7 +108,7 @@ export default function App() {
     if (jwt) {
       checkToken(jwt)
         .then((res) => {
-          setCurrentUser(res);
+          setCurrentUser(res.data);
           setIsLoggedIn(true);
         })
         .catch((err) => {
@@ -117,8 +119,8 @@ export default function App() {
 
   const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
     addClothingItem({ name, imageUrl, weather }, localStorage.getItem('jwt'))
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
+      .then((res) => {
+        setCards([res, ...cards]);
         closeModal();
       })
       .catch((err) => {
@@ -169,12 +171,11 @@ export default function App() {
     getClothingItems()
       .then((data) => {
         setCards(data);
-        closeModal();
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [cards]);
 
   useEffect(() => {
     confirmToken();
@@ -186,73 +187,71 @@ export default function App() {
         <CurrentTemperatureUnitContext.Provider
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
-          <Header
-            city={city}
-            handleOpenModal={handleOpenModal}
-            isLoggedIn={isLoggedIn}
-            currentUser={currentUser}
-          />
-          <Switch>
-            <Route exact path="/">
-              <Main
-                handleSelectedCard={handleSelectedCard}
-                skyCondition={skyCondition}
-                tempObj={tempObj}
-                cards={cards}
-              />
-            </Route>
-            <Route path="/profile">
-              {isLoggedIn ? (
-                <Profile
+          <CurrentUserContext.Provider
+            value={{ currentUser, isLoggedIn, noAvatar }}
+          >
+            <Header city={city} handleOpenModal={handleOpenModal} />
+            <Switch>
+              <Route exact path="/">
+                <Main
                   handleSelectedCard={handleSelectedCard}
-                  handleOpenModal={handleOpenModal}
+                  skyCondition={skyCondition}
+                  tempObj={tempObj}
                   cards={cards}
-                  currentUser={currentUser}
                 />
-              ) : (
-                <Redirect to="/" />
-              )}
-            </Route>
-          </Switch>
-          <Footer />
-          {activeModal === 'signup' && (
-            <RegisterModal
-              name={'signup'}
-              closeModal={closeModal}
-              handleClickOutsideModal={handleClickOutsideModal}
-              handleSignup={handleSignup}
-            />
-          )}
-          {activeModal === 'login' && (
-            <LoginModal
-              name={'login'}
-              closeModal={closeModal}
-              handleClickOutsideModal={handleClickOutsideModal}
-              handleLogin={handleLogin}
-            />
-          )}
-          {activeModal === 'create' && (
-            <AddItemModal
-              closeModal={closeModal}
-              handleClickOutsideModal={handleClickOutsideModal}
-              handleAddItemSubmit={handleAddItemSubmit}
-            />
-          )}
-          {activeModal === 'preview' && (
-            <ItemModal
-              name={'preview-card'}
-              selectedCard={selectedCard}
-              closeModal={closeModal}
-              handleClickOutsideModal={handleClickOutsideModal}
-              handleOpenModal={handleOpenModal}
-            />
-          )}
-          {activeModal === 'confirmation' && (
-            <ConfirmationModal
-              closeModal={closeModal}
-              handleCardDelete={handleCardDelete}
-            />
-          )}
+              </Route>
+              <Route path="/profile">
+                {isLoggedIn ? (
+                  <Profile
+                    handleSelectedCard={handleSelectedCard}
+                    handleOpenModal={handleOpenModal}
+                    cards={cards}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )}
+              </Route>
+            </Switch>
+            <Footer />
+            {activeModal === 'signup' && (
+              <RegisterModal
+                name={'signup'}
+                closeModal={closeModal}
+                handleClickOutsideModal={handleClickOutsideModal}
+                handleSignup={handleSignup}
+              />
+            )}
+            {activeModal === 'login' && (
+              <LoginModal
+                name={'login'}
+                closeModal={closeModal}
+                handleClickOutsideModal={handleClickOutsideModal}
+                handleLogin={handleLogin}
+              />
+            )}
+            {activeModal === 'create' && (
+              <AddItemModal
+                closeModal={closeModal}
+                handleClickOutsideModal={handleClickOutsideModal}
+                handleAddItemSubmit={handleAddItemSubmit}
+              />
+            )}
+            {activeModal === 'preview' && (
+              <ItemModal
+                name={'preview-card'}
+                selectedCard={selectedCard}
+                closeModal={closeModal}
+                handleClickOutsideModal={handleClickOutsideModal}
+                handleOpenModal={handleOpenModal}
+              />
+            )}
+            {activeModal === 'confirmation' && (
+              <ConfirmationModal
+                closeModal={closeModal}
+                handleCardDelete={handleCardDelete}
+              />
+            )}
+          </CurrentUserContext.Provider>
         </CurrentTemperatureUnitContext.Provider>
       </div>
     </BrowserRouter>
