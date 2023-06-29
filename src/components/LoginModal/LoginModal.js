@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { LoginValidation } from '../../utils/validation';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 
 export default function LoginModal({
@@ -6,18 +7,31 @@ export default function LoginModal({
   closeModal,
   handleClickOutsideModal,
   handleLogin,
+  setInvalidPassword,
+  invalidPassword,
 }) {
   const [loginValues, setLoginValues] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLoginValues({ ...loginValues, [name]: value });
+    setInvalidPassword(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(loginValues);
   };
+
+  useEffect(() => {
+    const { email, password } = loginValues;
+    if (email && password) {
+      setIsFormValid(LoginValidation(email, password));
+    } else {
+      setIsFormValid(false);
+    }
+  }, [loginValues]);
 
   return (
     <ModalWithForm
@@ -27,6 +41,7 @@ export default function LoginModal({
       closeModal={closeModal}
       handleClickOutsideModal={handleClickOutsideModal}
       handleSubmit={handleSubmit}
+      isFormValid={isFormValid}
     >
       <label className="modal__label">Email</label>
       <input
@@ -41,9 +56,17 @@ export default function LoginModal({
         value={loginValues.email || ''}
         onChange={handleInputChange}
       />
-      <label className="modal__label">Password</label>
+      <label
+        className={`modal__label ${
+          invalidPassword ? 'modal__label-invalid' : ''
+        }`}
+      >
+        Password
+      </label>
       <input
-        className="modal__input"
+        className={`modal__input ${
+          invalidPassword ? 'modal__input-invalid' : ''
+        }`}
         type="password"
         name="password"
         id="password"

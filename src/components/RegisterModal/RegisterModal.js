@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { SignUpValidation } from '../../utils/validation';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import './RegisterModal.css';
 
@@ -9,6 +10,7 @@ export default function RegisterModal({
   handleSignup,
 }) {
   const [registerValues, setRegisterValues] = useState({});
+  const [isRegisterFormValid, setIsRegisterFormValid] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,6 +22,16 @@ export default function RegisterModal({
     handleSignup(registerValues);
   };
 
+  useEffect(() => {
+    const { email, password, name } = registerValues;
+
+    if (email && password && name) {
+      setIsRegisterFormValid(SignUpValidation(email, password, name));
+    } else {
+      setIsRegisterFormValid(false);
+    }
+  }, [registerValues]);
+
   return (
     <ModalWithForm
       name={name}
@@ -28,6 +40,7 @@ export default function RegisterModal({
       closeModal={closeModal}
       handleClickOutsideModal={handleClickOutsideModal}
       handleSubmit={handleSubmit}
+      isRegisterFormValid={isRegisterFormValid}
     >
       <label className="modal__label">Email</label>
       <input
@@ -51,7 +64,7 @@ export default function RegisterModal({
         id="password"
         placeholder="Password"
         required
-        minLength="9"
+        minLength="8"
         maxLength="30"
         value={registerValues.password || ''}
         onChange={handleInputChange}
@@ -78,7 +91,6 @@ export default function RegisterModal({
         name="avatar"
         id="avatar"
         placeholder="Avatar URL"
-        required
         value={registerValues.avatar || ''}
         onChange={handleInputChange}
       />

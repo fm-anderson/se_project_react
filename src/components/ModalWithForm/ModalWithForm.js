@@ -8,6 +8,8 @@ export default function ModalWithForm({
   name,
   handleClickOutsideModal,
   handleSubmit,
+  isRegisterFormValid,
+  isFormValid,
 }) {
   return (
     <div
@@ -23,9 +25,17 @@ export default function ModalWithForm({
           onSubmit={handleSubmit}
         >
           {children}
-          <button className="modal__submit" type="submit">
-            {buttonText}
-          </button>
+          <div>
+            <button
+              className={`modal__submit ${
+                isFormValid || isRegisterFormValid ? 'modal__submit-valid' : ''
+              }`}
+              type="submit"
+            >
+              {buttonText}
+            </button>
+            <button className="modal__or-button">or Register</button>
+          </div>
         </form>
       </div>
     </div>

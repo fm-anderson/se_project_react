@@ -40,6 +40,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [noAvatar, setNoAvatar] = useState('');
+  const [invalidPassword, setInvalidPassword] = useState(false);
 
   const handleSelectedCard = (card) => {
     setSelectedCard(card);
@@ -69,12 +70,10 @@ export default function App() {
   const handleSignup = (data) => {
     setIsLoading(true);
     const { email, password } = data;
-    console.log(`inside signup function | data: ${data}`);
 
     signup(data)
       .then((res) => {
         handleLogin({ email, password });
-        console.log(res);
         closeModal();
       })
       .catch((err) => {
@@ -100,6 +99,9 @@ export default function App() {
         closeModal();
       })
       .catch((err) => {
+        if (err === 'Error: 401') {
+          setInvalidPassword(true);
+        }
         console.error(`Error: ${err}`);
       })
       .finally(() => {
@@ -223,7 +225,7 @@ export default function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, [cards]);
+  }, []);
 
   useEffect(() => {
     confirmToken();
@@ -286,6 +288,8 @@ export default function App() {
                 closeModal={closeModal}
                 handleClickOutsideModal={handleClickOutsideModal}
                 handleLogin={handleLogin}
+                invalidPassword={invalidPassword}
+                setInvalidPassword={setInvalidPassword}
               />
             )}
             {activeModal === 'create' && (
