@@ -6,6 +6,7 @@ export default function Profile({
   cards,
   handleSelectedCard,
   handleOpenModal,
+  handleLike,
 }) {
   return (
     <div className="profile">
@@ -14,6 +15,7 @@ export default function Profile({
         cards={cards}
         handleSelectedCard={handleSelectedCard}
         handleOpenModal={handleOpenModal}
+        handleLike={handleLike}
       />
     </div>
   );

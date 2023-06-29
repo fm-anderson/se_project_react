@@ -12,7 +12,13 @@ import {
   parseWeatherData,
   getWeatherCard,
 } from '../../utils/weatherApi';
-import { getClothingItems, addClothingItem, deleteCard } from '../../utils/api';
+import {
+  getClothingItems,
+  addClothingItem,
+  deleteCard,
+  likeCard,
+  unlikeCard,
+} from '../../utils/api';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import RegisterModal from '../RegisterModal/RegisterModal';
@@ -154,6 +160,26 @@ export default function App() {
       });
   };
 
+  const handleLike = (id, isLiked) => {
+    const jwt = localStorage.getItem('jwt');
+
+    !isLiked
+      ? likeCard(id, jwt)
+          .then((like) => {
+            setCards((cards) =>
+              cards.map((item) => (item._id === id ? like.data : item))
+            );
+          })
+          .catch((err) => console.log(err))
+      : unlikeCard(id, jwt)
+          .then((unlike) => {
+            setCards((cards) =>
+              cards.map((item) => (item._id === id ? unlike.data : item))
+            );
+          })
+          .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     if (!activeModal) return;
     const handleEsc = (e) => {
@@ -213,6 +239,7 @@ export default function App() {
                   skyCondition={skyCondition}
                   tempObj={tempObj}
                   cards={cards}
+                  handleLike={handleLike}
                 />
               </Route>
               <Route path="/profile">
@@ -221,6 +248,7 @@ export default function App() {
                     handleSelectedCard={handleSelectedCard}
                     handleOpenModal={handleOpenModal}
                     cards={cards}
+                    handleLike={handleLike}
                   />
                 ) : (
                   <Redirect to="/" />

@@ -7,6 +7,7 @@ export default function ClothesSection({
   cards,
   handleSelectedCard,
   handleOpenModal,
+  handleLike,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
 
@@ -28,15 +29,14 @@ export default function ClothesSection({
       </div>
       <div className="clothes-section__cards-container">
         {Array.isArray(filteredCards) &&
-          filteredCards.map((item) => {
-            return (
-              <ItemCard
-                key={item._id}
-                item={item}
-                handleSelectedCard={handleSelectedCard}
-              />
-            );
-          })}
+          filteredCards.map((item) => (
+            <ItemCard
+              key={item._id}
+              item={item}
+              handleSelectedCard={handleSelectedCard}
+              handleLike={handleLike}
+            />
+          ))}
       </div>
     </div>
   );

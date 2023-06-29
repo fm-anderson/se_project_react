@@ -9,6 +9,7 @@ export default function Main({
   handleSelectedCard,
   tempObj,
   skyCondition,
+  handleLike,
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
@@ -43,6 +44,7 @@ export default function Main({
                 key={item._id}
                 item={item}
                 handleSelectedCard={handleSelectedCard}
+                handleLike={handleLike}
               />
             ))}
         </div>
