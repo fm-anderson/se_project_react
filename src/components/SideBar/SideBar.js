@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './SideBar.css';
 
-export default function SideBar({ handleOpenModal }) {
+export default function SideBar({ handleOpenModal, handleSignOut }) {
   const { currentUser, noAvatar } = useContext(CurrentUserContext);
 
   return (
@@ -32,7 +32,7 @@ export default function SideBar({ handleOpenModal }) {
         <button
           className="sidebar__signout sidebar__button"
           type="button"
-          // onClick={handleSignOut}
+          onClick={handleSignOut}
         >
           Log Out
         </button>

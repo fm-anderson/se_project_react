@@ -180,6 +180,13 @@ export default function App() {
           .catch((err) => console.log(err));
   };
 
+  function handleSignOut() {
+    localStorage.removeItem('jwt');
+    setCurrentUser({});
+    setNoAvatar('');
+    setIsLoggedIn(false);
+  }
+
   useEffect(() => {
     if (!activeModal) return;
     const handleEsc = (e) => {
@@ -249,6 +256,7 @@ export default function App() {
                     handleOpenModal={handleOpenModal}
                     cards={cards}
                     handleLike={handleLike}
+                    handleSignOut={handleSignOut}
                   />
                 ) : (
                   <Redirect to="/" />

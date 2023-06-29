@@ -5,7 +5,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 export default function ItemCard({ item, handleSelectedCard, handleLike }) {
   const { isLoggedIn, currentUser } = useContext(CurrentUserContext);
 
-  const isLiked = item.likes.some((user) => user._id === currentUser._id);
+  const isLiked = item.likes.some((user) => user._id === currentUser?._id);
 
   const handleLikeClick = () => {
     handleLike(item._id, isLiked);

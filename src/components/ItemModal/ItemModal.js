@@ -10,7 +10,7 @@ export default function ItemModal({
   handleOpenModal,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
-  const isOwn = selectedCard.owner === currentUser._id;
+  const isOwn = selectedCard.owner === currentUser?._id;
 
   const capitalizeWord = (word) => {
     if (word) {

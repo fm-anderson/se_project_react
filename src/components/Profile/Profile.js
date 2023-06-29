@@ -7,10 +7,14 @@ export default function Profile({
   handleSelectedCard,
   handleOpenModal,
   handleLike,
+  handleSignOut,
 }) {
   return (
     <div className="profile">
-      <SideBar handleOpenModal={handleOpenModal} />
+      <SideBar
+        handleOpenModal={handleOpenModal}
+        handleSignOut={handleSignOut}
+      />
       <ClothesSection
         cards={cards}
         handleSelectedCard={handleSelectedCard}
