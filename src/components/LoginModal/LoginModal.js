@@ -9,6 +9,7 @@ export default function LoginModal({
   handleLogin,
   setInvalidPassword,
   invalidPassword,
+  handleOpenModal,
 }) {
   const [loginValues, setLoginValues] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
@@ -38,10 +39,12 @@ export default function LoginModal({
       name={name}
       title={'Log in'}
       buttonText={'Log in'}
+      orButtonText={'or Register'}
       closeModal={closeModal}
       handleClickOutsideModal={handleClickOutsideModal}
       handleSubmit={handleSubmit}
       isFormValid={isFormValid}
+      handleOpenModal={handleOpenModal}
     >
       <label className="modal__label">Email</label>
       <input

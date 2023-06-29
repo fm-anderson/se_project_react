@@ -1,6 +1,7 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
+import { UpdateProfileValidation } from '../../utils/validation';
 
 export default function EditProfileModal({
   handleUpdateProfile,
@@ -10,6 +11,7 @@ export default function EditProfileModal({
 }) {
   const { currentUser } = useContext(CurrentUserContext);
   const [profileValues, setProfileValues] = useState({});
+  const [isEditProfileValid, setIsEditProfileValid] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,14 +23,24 @@ export default function EditProfileModal({
     handleUpdateProfile(profileValues);
   };
 
+  useEffect(() => {
+    const { name, avatar } = profileValues;
+    if (name && avatar) {
+      setIsEditProfileValid(UpdateProfileValidation(name, avatar));
+    } else {
+      setIsEditProfileValid(false);
+    }
+  }, [profileValues]);
+
   return (
     <ModalWithForm
       title={'Edit Profile'}
       name={name}
-      buttonText={'Save changes'}
+      buttonText={'Save Changes'}
       handleSubmit={handleSubmit}
       closeModal={closeModal}
       handleClickOutsideModal={handleClickOutsideModal}
+      isEditProfileValid={isEditProfileValid}
     >
       <label className="modal__label">Name</label>
       <input

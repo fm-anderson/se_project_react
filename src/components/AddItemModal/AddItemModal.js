@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import FormAdd from '../FormAdd/FormAdd';
+import { NewItemValidation } from '../../utils/validation';
 
 const AddItemModal = ({
   isOpen,
@@ -11,6 +12,7 @@ const AddItemModal = ({
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [weather, setWeather] = useState('');
+  const [isAddFormValid, setIsAddFormValid] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,6 +31,16 @@ const AddItemModal = ({
     setWeather(e.target.value);
   }
 
+  NewItemValidation(name, imageUrl, weather);
+
+  useEffect(() => {
+    if (name != '' && imageUrl != '' && weather != '') {
+      setIsAddFormValid(true);
+    } else {
+      setIsAddFormValid(false);
+    }
+  }, [name, imageUrl, weather]);
+
   useEffect(() => {
     setName('');
     setImageUrl('');
@@ -43,6 +55,7 @@ const AddItemModal = ({
       handleSubmit={handleSubmit}
       closeModal={closeModal}
       handleClickOutsideModal={handleClickOutsideModal}
+      isAddFormValid={isAddFormValid}
     >
       <FormAdd
         handleNameChange={handleNameChange}

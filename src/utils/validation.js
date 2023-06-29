@@ -21,4 +21,13 @@ const NewItemValidation = (itemName, itemLink, weatherType) => {
   );
 };
 
-export { LoginValidation, SignUpValidation, NewItemValidation };
+const UpdateProfileValidation = (name, avatar) => {
+  return name.length > 2 && avatar.length > 2;
+};
+
+export {
+  LoginValidation,
+  SignUpValidation,
+  NewItemValidation,
+  UpdateProfileValidation,
+};

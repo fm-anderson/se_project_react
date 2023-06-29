@@ -280,6 +280,7 @@ export default function App() {
                 closeModal={closeModal}
                 handleClickOutsideModal={handleClickOutsideModal}
                 handleSignup={handleSignup}
+                handleOpenModal={handleOpenModal}
               />
             )}
             {activeModal === 'login' && (
@@ -290,6 +291,7 @@ export default function App() {
                 handleLogin={handleLogin}
                 invalidPassword={invalidPassword}
                 setInvalidPassword={setInvalidPassword}
+                handleOpenModal={handleOpenModal}
               />
             )}
             {activeModal === 'create' && (

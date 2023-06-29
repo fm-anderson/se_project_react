@@ -8,6 +8,7 @@ export default function RegisterModal({
   closeModal,
   handleClickOutsideModal,
   handleSignup,
+  handleOpenModal,
 }) {
   const [registerValues, setRegisterValues] = useState({});
   const [isRegisterFormValid, setIsRegisterFormValid] = useState(false);
@@ -41,6 +42,8 @@ export default function RegisterModal({
       handleClickOutsideModal={handleClickOutsideModal}
       handleSubmit={handleSubmit}
       isRegisterFormValid={isRegisterFormValid}
+      handleOpenModal={handleOpenModal}
+      orButtonText={'or Login'}
     >
       <label className="modal__label">Email</label>
       <input

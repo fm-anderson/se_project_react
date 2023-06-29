@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './ModalWithForm.css';
 
 export default function ModalWithForm({
@@ -5,12 +7,31 @@ export default function ModalWithForm({
   title,
   closeModal,
   buttonText,
+  orButtonText,
   name,
   handleClickOutsideModal,
   handleSubmit,
   isRegisterFormValid,
   isFormValid,
+  handleOpenModal,
+  isAddFormValid,
+  isEditProfileValid,
 }) {
+  const { isLoggedIn } = useContext(CurrentUserContext);
+
+  const handleOrClick = (modal) => {
+    switch (modal) {
+      case 'signup':
+        handleOpenModal('login');
+        break;
+      case 'login':
+        handleOpenModal('signup');
+        break;
+      default:
+        closeModal();
+    }
+  };
+
   return (
     <div
       className={`modal modal_type_${name}`}
@@ -26,15 +47,37 @@ export default function ModalWithForm({
         >
           {children}
           <div>
-            <button
-              className={`modal__submit ${
-                isFormValid || isRegisterFormValid ? 'modal__submit-valid' : ''
-              }`}
-              type="submit"
-            >
-              {buttonText}
-            </button>
-            <button className="modal__or-button">or Register</button>
+            {isLoggedIn ? (
+              <button
+                className={`modal__logged-user ${
+                  isAddFormValid || isEditProfileValid
+                    ? 'modal__logged-user-valid'
+                    : ''
+                }`}
+              >
+                {buttonText}
+              </button>
+            ) : (
+              <>
+                <button
+                  className={`modal__submit ${
+                    isFormValid || isRegisterFormValid
+                      ? 'modal__submit-valid'
+                      : ''
+                  }`}
+                  type="submit"
+                >
+                  {buttonText}
+                </button>
+                <button
+                  type="button"
+                  className="modal__or-button"
+                  onClick={() => handleOrClick(name)}
+                >
+                  {orButtonText}
+                </button>
+              </>
+            )}
           </div>
         </form>
       </div>
