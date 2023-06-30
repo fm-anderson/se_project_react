@@ -32,6 +32,10 @@ export default function EditProfileModal({
     }
   }, [profileValues]);
 
+  useEffect(() => {
+    setProfileValues({ name: currentUser.name, avatar: currentUser.avatar });
+  }, []);
+
   return (
     <ModalWithForm
       title={'Edit Profile'}
@@ -48,7 +52,7 @@ export default function EditProfileModal({
         type="text"
         name="name"
         id="name"
-        placeholder={currentUser.name}
+        placeholder="Name"
         minLength="1"
         maxLength="30"
         required
@@ -61,7 +65,7 @@ export default function EditProfileModal({
         type="url"
         name="avatar"
         id="avatar"
-        placeholder={currentUser.avatar}
+        placeholder="Avatar URL"
         required
         value={profileValues.avatar || ''}
         onChange={handleInputChange}

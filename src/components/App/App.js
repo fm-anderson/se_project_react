@@ -26,6 +26,7 @@ import LoginModal from '../LoginModal/LoginModal';
 import { signup, signin, checkToken, updateProfile } from '../../utils/auth';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import EditProfileModal from '../EditProfileModal/EditProfileModal';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 export default function App() {
   const [tempObj, setTempObj] = useState(0);
@@ -145,6 +146,16 @@ export default function App() {
       .then((res) => {
         setCards([res, ...cards]);
         closeModal();
+        getClothingItems()
+          .then((data) => {
+            const byDate = data.sort(
+              (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)
+            );
+            setCards(byDate);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -220,7 +231,10 @@ export default function App() {
   useEffect(() => {
     getClothingItems()
       .then((data) => {
-        setCards(data);
+        const byDate = data.sort(
+          (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)
+        );
+        setCards(byDate);
       })
       .catch((err) => {
         console.log(err);
@@ -251,8 +265,8 @@ export default function App() {
                   handleLike={handleLike}
                 />
               </Route>
-              <Route path="/profile">
-                {isLoggedIn ? (
+              <ProtectedRoute path="/profile">
+                <Route path="/profile">
                   <Profile
                     handleSelectedCard={handleSelectedCard}
                     handleOpenModal={handleOpenModal}
@@ -260,10 +274,8 @@ export default function App() {
                     handleLike={handleLike}
                     handleSignOut={handleSignOut}
                   />
-                ) : (
-                  <Redirect to="/" />
-                )}
-              </Route>
+                </Route>
+              </ProtectedRoute>
             </Switch>
             <Footer />
             {activeModal === 'editProfile' && (
