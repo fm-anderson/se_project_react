@@ -94,7 +94,7 @@ export default function App() {
         localStorage.setItem('jwt', res.token);
         checkToken(res.token).then((res) => {
           setCurrentUser(res.data);
-          setNoAvatar(currentUser?.name.slice(0, 1));
+          setNoAvatar(currentUser?.name?.slice(0, 1));
           setIsLoggedIn(true);
         });
         closeModal();
