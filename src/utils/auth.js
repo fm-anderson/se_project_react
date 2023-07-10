@@ -1,5 +1,8 @@
 import { request } from './api';
-const baseUrl = 'https://api.wtwr-fma.mooo.com';
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://api.wtwr-fma.mooo.com'
+    : 'http://localhost:3000';
 
 function signup(data) {
   const { name, avatar, email, password } = data;

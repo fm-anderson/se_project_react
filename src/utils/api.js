@@ -1,7 +1,7 @@
-// --- baseUrl for github pages. Will deploy after code review is complete. ---
-// const baseUrl = 'https://my-json-server.typicode.com/fm-anderson/se_project_react';
-
-const baseUrl = 'https://api.wtwr-fma.mooo.com';
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://api.wtwr-fma.mooo.com'
+    : 'http://localhost:3000';
 
 const checkResponse = (res) => {
   if (res.ok) {
