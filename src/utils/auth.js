@@ -1,5 +1,5 @@
 import { request } from './api';
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'https://api.wtwr-fma.mooo.com';
 
 function signup(data) {
   const { name, avatar, email, password } = data;

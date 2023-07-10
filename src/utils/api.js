@@ -1,7 +1,7 @@
 // --- baseUrl for github pages. Will deploy after code review is complete. ---
 // const baseUrl = 'https://my-json-server.typicode.com/fm-anderson/se_project_react';
 
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'https://api.wtwr-fma.mooo.com';
 
 const checkResponse = (res) => {
   if (res.ok) {
